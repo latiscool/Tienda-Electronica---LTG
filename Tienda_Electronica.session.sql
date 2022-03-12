@@ -59,7 +59,7 @@ VALUES
 ('Cable HDMI','descripcion categoria 5',10,10,2);
 
 
----- 4. 3 facturas.
+-- ---- 4. 3 facturas.
 
 
 CREATE TABLE factura(
@@ -70,7 +70,7 @@ id_cliente INT,
 FOREIGN KEY (id_cliente) REFERENCES cliente (id)
 );
 
--- TABLA INTERMEDIA
+-- -- TABLA INTERMEDIA
 
 CREATE TABLE producto_factura(
 id_producto INT,
@@ -83,9 +83,9 @@ FOREIGN KEY (id_factura) REFERENCES factura (id)
 
 
 
----- ● 1 para el cliente 1, con 3 productos diferentes
--- -----//haciendo la factura para cliente id=1 con 3 productos
----- // En caso de tener problema con la id factura, especificar la id
+-- ---- ● 1 para el cliente 1, con 3 productos diferentes
+-- -- -----//haciendo la factura para cliente id=1 con 3 productos
+-- ---- // En caso de tener problema con la id factura, especificar la id
 BEGIN;
 
 INSERT INTO factura (id_cliente, fecha) VALUES (1, '2020-07-28');
@@ -103,7 +103,7 @@ UPDATE producto SET stock = stock - 2 WHERE id = 3;
 COMMIT;
 
 
----- ● 1 para el cliente 2, con 2 productos diferentes
+-- ---- ● 1 para el cliente 2, con 2 productos diferentes
 
 BEGIN;
 INSERT INTO factura (id_cliente,fecha) VALUES (2,'2020-11-04');
@@ -117,8 +117,7 @@ COMMIT;
 
 
 
-
----- ● 1 para el cliente 3, con 1 solo producto
+-- ---- ● 1 para el cliente 3, con 1 solo producto
 
 BEGIN;
 
@@ -132,11 +131,12 @@ COMMIT;
 
 
 
----- Realizar las siguientes consultas:
+-- ---- Realizar las siguientes consultas:
 
 
----- 5. ¿Cuál es el nombre del cliente que realizó la compra más cara?
-----//CONSULTA VIDEO
+-- ---- 5. ¿Cuál es el nombre del cliente que realizó la compra más cara?
+-- ----//CONSULTA VIDEO
+
 SELECT nombre FROM cliente
 WHERE id IN (
   SELECT id_cliente FROM factura 
@@ -144,12 +144,12 @@ WHERE id IN (
   LIMIT 1
 );
 
-----  nombre
----- ---------
-----  Jocelyn
----- (1 row)
+-- ----  nombre
+-- ---- ---------
+-- ----  Jocelyn
+-- ---- (1 row)
 
-----//MI CONSULTA
+-- ----//MI CONSULTA
 SELECT cliente.nombre, MAX(subtotal) as compra_mas_cara
 FROM cliente, factura
 WHERE cliente.id=factura.id
@@ -158,15 +158,15 @@ ORDER BY compra_mas_cara DESC
 LIMIT 1
  ;
 
-----  nombre  | compra_mas_cara
----- ---------+-----------------
-----  Jocelyn |             265
----- (1 row)
+-- ----  nombre  | compra_mas_cara
+-- ---- ---------+-----------------
+-- ----  Jocelyn |             265
+-- ---- (1 row)
 
 
----- 6. ¿Cuáles son los nombres de los clientes que pagaron más de 60$? Considere un IVA
----- del 19%
-----//CONSULTA VIDEO
+-- ---- 6. ¿Cuáles son los nombres de los clientes que pagaron más de 60$? Considere un IVA
+-- ---- del 19%
+-- ----//CONSULTA VIDEO
 
 SELECT nombre FROM cliente
 WHERE id  IN ( 
@@ -174,28 +174,30 @@ SELECT id_cliente FROM factura
 WHERE subtotal > 60*1.19
 );
 
-----  nombre
----- ---------
-----  Jocelyn
-----  Ignacia
----- (2 rows)
+-- ----  nombre
+-- ---- ---------
+-- ----  Jocelyn
+-- ----  Ignacia
+-- ---- (2 rows)
 
 
-----//MI CONSULTA
+-- ----//MI CONSULTA
 SELECT cliente.nombre, factura.subtotal FROM cliente, factura
 WHERE cliente.id=factura.id AND subtotal > (60*1.19);
 
-----  nombre  | subtotal
----- ---------+----------
-----  Jocelyn |      265
-----  Ignacia |       80
----- (2 rows)
+-- ----  nombre  | subtotal
+-- ---- ---------+----------
+-- ----  Jocelyn |      265
+-- ----  Ignacia |       80
+-- ---- (2 rows)
 
 
 
 
----- 7. ¿Cuántos clientes han comprado más de 5 productos? Considere la cantidad por
----- producto comprado
+-- ---- 7. ¿Cuántos clientes han comprado más de 5 productos? Considere la cantidad por
+-- ---- producto comprado
+
+----//CONSULTA VIDEO
 
 SELECT COUNT(nombre) FROM cliente
 WHERE id IN (
@@ -208,7 +210,38 @@ WHERE id IN (
    )
 );
 
-----  count
----------
-  ----   2
-----(1 row)
+-- ----  count
+-- ---------
+--   ----   2
+-- ----(1 row)
+
+
+----//MI CONSULTA
+
+--------------------ORIGINALES--------------
+
+----//PASO 1, SUMAR LA CANTIDAD PRODUCTO QUE TIENE CON REALCION LA FACTURA
+SELECT producto_factura.id_factura AS FAC_ID, SUM(producto_factura.cantidad) as Sum_Prod
+FROM producto_factura, factura
+WHERE producto_factura.id_factura = factura.id
+GROUP by FAC_ID
+;
+
+
+-- ----//PASO 2, Relacion  cual cliente tiene  compras mayor a 5 unidades
+---- //Obtengo los nombres de los clientes de las compra sobre 5 productos, 
+----//se obtiene de forma invidual, no total como la otra consulta con COUNT()
+
+
+SELECT cliente.nombre AS Clientes
+FROM producto_factura, factura, cliente
+WHERE producto_factura.id_factura = factura.id  AND cliente.id=factura.id_cliente
+GROUP by Clientes
+HAVING  SUM(producto_factura.cantidad)> 5
+;
+ 
+----  clientes
+---- ----------
+----  Ignacia
+----  Jocelyn
+---- (2 rows)
