@@ -100,7 +100,7 @@ UPDATE producto SET stock = stock - 1 WHERE id = 1;
 UPDATE producto SET stock = stock - 3 WHERE id = 2;
 UPDATE producto SET stock = stock - 2 WHERE id = 3;
 
--- COMMIT;
+COMMIT;
 
 
 ---- ● 1 para el cliente 2, con 2 productos diferentes
