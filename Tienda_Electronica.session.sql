@@ -157,11 +157,17 @@ GROUP BY cliente.nombre
 ORDER BY compra_mas_cara DESC
 LIMIT 1
  ;
-
 -- ----  nombre  | compra_mas_cara
 -- ---- ---------+-----------------
 -- ----  Jocelyn |             265
 -- ---- (1 row)
+
+
+-- ----//MI CONSULTA v2
+SELECT*FROM factura    
+ORDER BY subtotal desc
+LIMIT 1;
+
 
 
 -- ---- 6. ¿Cuáles son los nombres de los clientes que pagaron más de 60$? Considere un IVA
@@ -184,6 +190,14 @@ WHERE subtotal > 60*1.19
 -- ----//MI CONSULTA
 SELECT cliente.nombre, factura.subtotal FROM cliente, factura
 WHERE cliente.id=factura.id AND subtotal > (60*1.19);
+
+-- ----//MI CONSULTA v2
+SELECT id_cliente, subtotal
+FROM factura
+WHERE subtotal > 60*1.19;
+
+
+
 
 -- ----  nombre  | subtotal
 -- ---- ---------+----------
@@ -218,10 +232,10 @@ WHERE id IN (
 
 ----//MI CONSULTA
 
---------------------ORIGINALES--------------
+--------------------METODO ALTERNATIVO--------------
 
 ----//PASO 1, SUMAR LA CANTIDAD PRODUCTO QUE TIENE CON REALCION LA FACTURA
-SELECT producto_factura.id_factura AS FAC_ID, SUM(producto_factura.cantidad) as Sum_Prod
+SELECT producto_factura.id_factura AS FAC_ID, SUM(producto_factura.cantidad) as Sum_Cant_Prod
 FROM producto_factura, factura
 WHERE producto_factura.id_factura = factura.id
 GROUP by FAC_ID
@@ -245,3 +259,22 @@ HAVING  SUM(producto_factura.cantidad)> 5
 ----  Ignacia
 ----  Jocelyn
 ---- (2 rows)
+
+
+----// QUERY FINAL -MI CONSULTA V3
+
+select count(*) total_clientes
+    from ((SELECT cliente.nombre AS Clientes
+            FROM producto_factura, factura, cliente
+            WHERE producto_factura.id_factura = factura.id
+            AND cliente.id=factura.id_cliente
+            GROUP by Clientes
+            HAVING  SUM(producto_factura.cantidad)> 5)) AS A;
+
+---- Con aporte de Eric Espinoza 
+
+----  total_clientes
+---- ----------------
+----               2
+---- (1 row)
+
