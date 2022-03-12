@@ -28,7 +28,7 @@ VALUES
 CREATE TABLE categoria (
 id SERIAL UNIQUE PRIMARY KEY,
 nombre VARCHAR (50),
-direccion VARCHAR (50)
+descripcion VARCHAR (50)
 );
 
 INSERT INTO categoria (nombre, descripcion)
