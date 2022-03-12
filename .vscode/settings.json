@@ -1,0 +1,104 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "database": "postgres",
+      "username": "postgres",
+      "password": "postgresql",
+      "name": "25-02-22"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "26-02-2022",
+      "database": "posts",
+      "username": "postgres",
+      "password": "postgresql"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "pokeEje",
+      "database": "poke",
+      "username": "postgres",
+      "password": "postgresql"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "DBmawashicars",
+      "database": "mawashicars",
+      "username": "postgres",
+      "password": "postgresql"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "03032022",
+      "database": "roles",
+      "username": "postgres",
+      "password": "postgresql"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "DesafioBLOG",
+      "database": "blog",
+      "username": "postgres",
+      "password": "postgresql"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "05-03-2022_PDF",
+      "database": "banco",
+      "username": "postgres",
+      "password": "postgresql"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Mawashi_05_03_22",
+      "database": "mawashi",
+      "username": "postgres",
+      "password": "postgresql"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Desafio_jobs",
+      "database": "jobs",
+      "username": "postgres",
+      "password": "postgresql"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "Tienda_Electronica",
+      "database": "tienda_de_electronica",
+      "username": "postgres",
+      "password": "postgresql"
+    }
+  ]
+}
